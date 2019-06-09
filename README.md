@@ -9,6 +9,10 @@ To start:
   * Install Node.js dependencies with `npm install`
   * Start server with `mix phoenix.server` or run as daemon with `MIX_ENV=dev PORT=4000 elixir --detached -S mix phoenix.server`
 
+To config:
+
+  * Edit `config/config.exs`
+
 Visit [`localhost:4000`](http://localhost:4000) from browser.
 
 ## Learn Phoenix Framework
