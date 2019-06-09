@@ -1,0 +1,46 @@
+<%= if @configs != nil do %>
+<ul class="nav nav-tabs">
+  <li class="nav-item active" id="all-tab">
+    <a class="nav-link" href="#" onclick="switchProduct('all')">all</a>
+  </li>
+  <%= for product <- @products do %>
+  <li class="nav-item" id="<%= product %>-tab">
+    <a class="nav-link" href="#" onclick="switchProduct('<%= product %>')"><%= product %></a>
+  </li>
+  <% end %>
+</ul>
+<table class="table table-bordered">
+  <tr>
+    <th>Job</th>
+    <th>Node</th>
+    <th>Tags</th>
+    <th>Product</th>
+  </tr>
+  <!-- by product -->
+  <%= for product <- @products do %>
+    <%= for config <- @configs do %>
+      <%= if config["product"] == product do %>
+        <tr class="tr-<%= product %>" style="display: none">
+          <td><a href="<%= @url %>/job/<%= config["job"] %>/configure" target="_blank"><%= config["job"] %></a></td>
+          <td><a href="#" class="node" id="<%= config["job"] %>" data-type="text" data-pk="1" data-url="/edit/node" data-csrf="<%= get_csrf_token() %>" data-title="Enter node name"><%= config["node"] %></a></td>
+          <td><a href="#" class="tags" id="<%= config["job"] %>" data-type="text" data-pk="2" data-url="/edit/tags" data-csrf="<%= get_csrf_token() %>" data-title="Enter tags"><%= config["tags"] %></a></td>
+          <td><a href="#" class="product" id="<%= config["job"] %>" data-type="select" data-pk="3" data-url="/edit/product" data-csrf="<%= get_csrf_token() %>" data-title="Select product" data-value="<%= config["product"] %>" data-products="<%= @products_ %>"></a></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+  <!-- all -->
+  <%= for config <- @configs do %>
+    <tr class="tr-all">
+      <td><a href="<%= @url %>/job/<%= config["job"] %>/configure" target="_blank"><%= config["job"] %></a></td>
+      <td><a href="#" class="node" id="<%= config["job"] %>" data-type="text" data-pk="1" data-url="/edit/node" data-csrf="<%= get_csrf_token() %>" data-title="Enter node name"><%= config["node"] %></a></td>
+      <td><a href="#" class="tags" id="<%= config["job"] %>" data-type="text" data-pk="2" data-url="/edit/tags" data-csrf="<%= get_csrf_token() %>" data-title="Enter tags"><%= config["tags"] %></a></td>
+      <td><a href="#" class="product" id="<%= config["job"] %>" data-type="select" data-pk="3" data-url="/edit/product" data-csrf="<%= get_csrf_token() %>" data-title="Select product" data-value="<%= config["product"] %>" data-products="<%= @products_ %>"></a></td>
+    </tr>
+  <% end %>
+</table>
+<% else %>
+  <div class="alert alert-danger">
+    empty config file, try [Sync All From Jenkins]
+  </div>
+<% end %>

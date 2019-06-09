@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/bootstrap.css") %>">
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script> 
+    <script src="<%= static_path(@conn, "/js/bootstrap.js") %>"></script>     
+    
+    <!-- x-editable -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+    <title>Jenkins Build Node Manager</title>
+  </head>
+
+  <body>
+    <div class="container">
+      
+      <div class="header clearfix">
+        <div class="col-12">
+          <div class="col-6">
+            <div class="pull-right">
+              <a class="btn btn-primary" href="/backup" role="button btn-sm">Sync All from Jenkins</a>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#batchEditNodeModal">
+                Batch Edit Node by Tag
+              </button>
+            </div>
+          </div>
+          <div class="col-6">
+            <h3 class="text-muted">Jenkins Build Node Manager</h3>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+      </div>
+
+      <div class="row">
+        <main role="main">
+          <%= render @view_module, @view_template, assigns %>
+        </main>
+      </div>
+      
+      <div class="modal fade" id="batchEditNodeModal" tabindex="-1" role="dialog" aria-labelledby="batchEditNodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="batchEditNodeModalLabel">Batch Edit Node</h5>
+            </div>
+            <div class="modal-body">
+              <form action="/edit/batch/node" method="post" id="batchEditNodeModalSubmitForm">
+                <input type="hidden" name="_csrf_token" value="<%= get_csrf_token() %>">
+                <div class="form-group">
+                  <label for="recipient-name" class="form-control-label">product:</label>
+                  <input type="text" class="form-control" name="product">
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="form-control-label">Tag:</label>
+                  <input type="text" class="form-control" name="tag">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="form-control-label">Node:</label>
+                  <input class="form-control" name="node"></input>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="batchEditNodeModalSubmitBtn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/main.js") %>"></script>
+  </body>
+</html>
